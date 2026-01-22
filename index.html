@@ -3,35 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AikoKidzTV Hub - Kids Paradise</title>
+    <title>AikoKidzTV Hub - Badges & Rewards</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Quicksand', sans-serif; background-color: #f0f9ff; }
+        body { font-family: 'Quicksand', sans-serif; background-color: #f0f9ff; overflow-x: hidden; }
         .kids-font { font-family: 'Fredoka One', cursive; }
+        .badge-diamond { color: #00d4ff; text-shadow: 0 0 15px #00d4ff; font-size: 2.5rem; animation: pulse 2s infinite; }
+        .badge-ruby { color: #ff0055; text-shadow: 0 0 10px #ff0055; font-size: 2.2rem; }
+        .badge-gem { color: #00ff88; text-shadow: 0 0 10px #00ff88; font-size: 2rem; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+        
+        /* Focus Card Style */
+        .plan-card { max-width: 320px; margin: 20px auto; border-radius: 30px; border: 4px solid #fbbf24; background: white; padding: 25px; box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
 
-    <header class="bg-yellow-400 p-4 shadow-lg flex justify-between items-center text-white text-center">
-        <h1 class="kids-font text-2xl">AikoKidzTV Hub</h1>
-        <button onclick="loginUser()" id="loginBtn" class="bg-blue-500 px-4 py-2 rounded-full font-bold shadow-md hover:bg-blue-600">Login / Sign Up</button>
+    <div id="test-notice" class="bg-red-600 text-white text-center py-2 kids-font text-sm hidden">
+        🚀 Taiyaar Ho Jao! Kal Weekly Test Hai! 💎 Diamond Badge Jeeto!
+    </div>
+
+    <header class="bg-yellow-400 p-4 shadow-lg flex justify-between items-center text-white">
+        <h1 class="kids-font text-2xl tracking-wider">AikoKidzTV</h1>
+        <button onclick="loginUser()" id="loginBtn" class="bg-blue-600 px-5 py-2 rounded-full font-bold shadow-md hover:bg-blue-700 transition-all">Login</button>
     </header>
 
-    <section class="text-center py-12 bg-white m-4 rounded-3xl shadow-xl">
-        <h2 class="kids-font text-4xl text-orange-500 mb-4">Luna and the Lost Starlight 🌙</h2>
-        <p class="mb-8 text-gray-600 text-lg px-4">Bachon ke liye jaadu bhari digital storybook aur cartoons!</p>
-        
-        <button id="rzp-button1" class="bg-pink-500 text-white px-10 py-4 rounded-full text-xl kids-font shadow-lg hover:scale-105 transition-all">
-            Abhi Khareedein (₹199) 🚀
-        </button>
+    <section class="mt-6 mx-4 p-5 bg-white rounded-3xl shadow-lg border-b-8 border-blue-200 text-center">
+        <h2 class="kids-font text-2xl text-purple-600 mb-6 underline decoration-yellow-400">Top Stars 🏆</h2>
+        <div class="flex justify-around items-end">
+            <div class="flex flex-col items-center">
+                <span class="badge-ruby">🔴</span>
+                <p class="text-xs font-bold text-gray-500">Rank 2</p>
+            </div>
+            <div class="flex flex-col items-center">
+                <span class="badge-diamond">💎</span>
+                <p class="text-xs font-bold text-gray-800">Rank 1</p>
+            </div>
+            <div class="flex flex-col items-center">
+                <span class="badge-gem">🟢</span>
+                <p class="text-xs font-bold text-gray-500">Rank 3</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-8 px-4 text-center">
+        <p class="kids-font text-gray-500 mb-2">Chuniye Apna Plan ✨</p>
+        <div id="standard-plan" class="plan-card">
+            <h3 class="kids-font text-2xl text-yellow-500">Golden Access</h3>
+            <p class="text-gray-500 text-sm mt-2">Unlimited Stories & Badges</p>
+            <div class="text-5xl font-bold my-6 text-gray-800">₹199</div>
+            <button onclick="payNow()" class="bg-pink-500 text-white w-full py-4 rounded-2xl kids-font text-xl shadow-xl hover:bg-pink-600 transition-all active:scale-95">
+                Start Learning 🚀
+            </button>
+        </div>
+        <p class="text-blue-400 text-sm mt-4 italic font-bold">Har Friday ko Saste Plans ka Dhamaka! 🎁</p>
     </section>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-        // AAPKI FIREBASE CONFIG JO AAPNE COPY KI THI
         const firebaseConfig = {
           apiKey: "AIzaSyD4M_1Yu0NQ6WUDZYz-EK9JLMkgFYTAEFw",
           authDomain: "aikokidztv-70911635-566b7.firebaseapp.com",
@@ -48,34 +80,32 @@
         window.loginUser = () => {
             signInWithPopup(auth, provider).then((result) => {
                 const user = result.user;
-                document.getElementById('loginBtn').innerText = "Namaste, " + user.displayName.split(' ')[0];
+                document.getElementById('loginBtn').innerText = user.displayName.split(' ')[0];
                 if(user.email === "advdeepaknarwal8@gmail.com") {
-                    alert("Swagat hai Supreme Admin! Aapka account access active hai.");
+                    alert("Namaste Supreme Admin! Dashboard Ready Hai.");
                 }
-            }).catch((err) => {
-                console.error(err);
-                alert("Login Error: " + err.message);
-            });
+            }).catch((err) => alert("Error: " + err.message));
         };
+
+        // Test Notice Logic (Tue & Fri notification for Wed/Sat Test)
+        const d = new Date().getDay();
+        if(d === 2 || d === 5) document.getElementById('test-notice').classList.remove('hidden');
     </script>
 
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
-        document.getElementById('rzp-button1').onclick = function(e){
+        function payNow() {
             var options = {
-                "key": "rzp_live_S6svpzB6CZf6bv", // <-- YAHAN APNI rzp_live_... WALI KEY DALEIN
+                "key": "rzp_live_S6svpzB6CZf6bv",
                 "amount": "19900",
-                "name": "AikoKidzTV",
-                "description": "Storybook Digital Access",
-                "handler": function (response){ 
-                    alert("Payment Successful! Payment ID: " + response.razorpay_payment_id); 
-                },
+                "name": "AikoKidzTV Hub",
+                "description": "Weekly Test & Badges Access",
+                "handler": function (response){ alert("Payment Success! ID: " + response.razorpay_payment_id); },
                 "prefill": { "name": "Deepak Kumar" },
                 "theme": { "color": "#fbbf24" }
             };
             var rzp1 = new Razorpay(options);
             rzp1.open();
-            e.preventDefault();
         }
     </script>
 </body>
