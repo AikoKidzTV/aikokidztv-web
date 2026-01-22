@@ -10,48 +10,17 @@
         body { font-family: 'Quicksand', sans-serif; background-color: #f0f9ff; overflow-x: hidden; }
         .kids-font { font-family: 'Fredoka One', cursive; }
         .badge-diamond { color: #00d4ff; text-shadow: 0 0 15px #00d4ff; font-size: 2.5rem; animation: pulse 2s infinite; }
-        .badge-ruby { color: #ff0055; text-shadow: 0 0 10px #ff0055; font-size: 2.2rem; }
-        .badge-gem { color: #00ff88; text-shadow: 0 0 10px #00ff88; font-size: 2rem; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
-        
-        /* Focus Card Style */
         .plan-card { max-width: 320px; margin: 20px auto; border-radius: 30px; border: 4px solid #fbbf24; background: white; padding: 25px; box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
     </style>
 </head>
-<body><script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyD4M_1Yu0NQ6WUDZYz-EK9JLMkgFYTAEFw",
-      authDomain: "aikokidztv-70911635-566b7.firebaseapp.com",
-      projectId: "aikokidztv-70911635-566b7",
-      storageBucket: "aikokidztv-70911635-566b7.firebasestorage.app",
-      messagingSenderId: "963381532405",
-      appId: "1:963381532405:web:9f3af5f82d049f508a17bc"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const provider = new GoogleAuthProvider();
-
-    // Login Function for Firebase
-    window.loginUser = () => {
-        signInWithPopup(auth, provider).then((result) => {
-            alert("Login Successful! Welcome to Firebase Dashboard.");
-            location.reload(); 
-        }).catch((err) => {
-            alert("Login Error: " + err.message);
-        });
-    };
-</script>
-
+<body>
 
     <div id="test-notice" class="bg-red-600 text-white text-center py-2 kids-font text-sm hidden">
         🚀 Taiyaar Ho Jao! Kal Weekly Test Hai! 💎 Diamond Badge Jeeto!
     </div>
 
-    <header class="bg-yellow-400 p-4 shadow-lg flex justify-between items-center text-white">
+    <header class="bg-yellow-400 p-4 shadow-lg flex justify-between items-center text-white text-center">
         <h1 class="kids-font text-2xl tracking-wider">AikoKidzTV</h1>
         <button onclick="loginUser()" id="loginBtn" class="bg-blue-600 px-5 py-2 rounded-full font-bold shadow-md hover:bg-blue-700 transition-all">Login</button>
     </header>
@@ -59,26 +28,16 @@
     <section class="mt-6 mx-4 p-5 bg-white rounded-3xl shadow-lg border-b-8 border-blue-200 text-center">
         <h2 class="kids-font text-2xl text-purple-600 mb-6 underline decoration-yellow-400">Top Stars 🏆</h2>
         <div class="flex justify-around items-end">
-            <div class="flex flex-col items-center">
-                <span class="badge-ruby">🔴</span>
-                <p class="text-xs font-bold text-gray-500">Rank 2</p>
-            </div>
-            <div class="flex flex-col items-center">
-                <span class="badge-diamond">💎</span>
-                <p class="text-xs font-bold text-gray-800">Rank 1</p>
-            </div>
-            <div class="flex flex-col items-center">
-                <span class="badge-gem">🟢</span>
-                <p class="text-xs font-bold text-gray-500">Rank 3</p>
-            </div>
+            <div class="flex flex-col items-center">🔴<p class="text-xs font-bold text-gray-500">Rank 2</p></div>
+            <div class="flex flex-col items-center"><span class="badge-diamond">💎</span><p class="text-xs font-bold text-gray-800 text-[10px]">Rank 1</p></div>
+            <div class="flex flex-col items-center">🟢<p class="text-xs font-bold text-gray-500">Rank 3</p></div>
         </div>
     </section>
 
     <section class="py-8 px-4 text-center">
-        <p class="kids-font text-gray-500 mb-2">Chuniye Apna Plan ✨</p>
         <div id="standard-plan" class="plan-card">
             <h3 class="kids-font text-2xl text-yellow-500">Golden Access</h3>
-            <p class="text-gray-500 text-sm mt-2">Unlimited Stories & Badges</p>
+            <p class="text-gray-500 text-sm mt-2 font-bold">Unlimited Stories & Badges</p>
             <div class="text-5xl font-bold my-6 text-gray-800">₹199</div>
             <button onclick="payNow()" class="bg-pink-500 text-white w-full py-4 rounded-2xl kids-font text-xl shadow-xl hover:bg-pink-600 transition-all active:scale-95">
                 Start Learning 🚀
@@ -86,6 +45,23 @@
         </div>
         <p class="text-blue-400 text-sm mt-4 italic font-bold">Har Friday ko Saste Plans ka Dhamaka! 🎁</p>
     </section>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        function payNow() {
+            var options = {
+                "key": "rzp_live_S6svpzB6CZf6bv",
+                "amount": "19900",
+                "name": "AikoKidzTV Hub",
+                "description": "Weekly Test & Badges Access",
+                "handler": function (response){ alert("Payment Success! ID: " + response.razorpay_payment_id); },
+                "prefill": { "name": "Deepak Kumar" },
+                "theme": { "color": "#fbbf24" }
+            };
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
+        }
+    </script>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -107,33 +83,17 @@
         window.loginUser = () => {
             signInWithPopup(auth, provider).then((result) => {
                 const user = result.user;
-                document.getElementById('loginBtn').innerText = user.displayName.split(' ')[0];
+                alert("Login Successful! Namaste " + user.displayName);
+                const btn = document.getElementById('loginBtn');
+                if(btn) btn.innerText = user.displayName.split(' ')[0];
                 if(user.email === "advdeepaknarwal8@gmail.com") {
-                    alert("Namaste Supreme Admin! Dashboard Ready Hai.");
+                    alert("Welcome Supreme Admin! Sab controls active hain.");
                 }
-            }).catch((err) => alert("Error: " + err.message));
+            }).catch((err) => alert("Login Error: " + err.message));
         };
 
-        // Test Notice Logic (Tue & Fri notification for Wed/Sat Test)
         const d = new Date().getDay();
         if(d === 2 || d === 5) document.getElementById('test-notice').classList.remove('hidden');
-    </script>
-
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-    <script>
-        function payNow() {
-            var options = {
-                "key": "rzp_live_S6svpzB6CZf6bv",
-                "amount": "19900",
-                "name": "AikoKidzTV Hub",
-                "description": "Weekly Test & Badges Access",
-                "handler": function (response){ alert("Payment Success! ID: " + response.razorpay_payment_id); },
-                "prefill": { "name": "Deepak Kumar" },
-                "theme": { "color": "#fbbf24" }
-            };
-            var rzp1 = new Razorpay(options);
-            rzp1.open();
-        }
     </script>
 </body>
 </html>
