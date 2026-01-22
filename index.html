@@ -3,71 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AikoKidzTV - Bachon ki Pyari Duniya</title>
+    <title>AikoKidzTV Hub - Kids Paradise</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Quicksand', sans-serif; background-color: #f0f9ff; }
         .kids-font { font-family: 'Fredoka One', cursive; }
-        .card-bounce:hover { transform: scale(1.05); transition: 0.3s; }
     </style>
 </head>
-<body class="overflow-x-hidden">
+<body>
 
-    <header class="bg-yellow-400 p-4 shadow-lg flex justify-between items-center">
-        <h1 class="kids-font text-3xl text-white tracking-wide">AikoKidzTV Hub</h1>
-        <div class="bg-white rounded-full px-4 py-1 text-yellow-600 font-bold shadow-sm">Namaste, Kids! ⭐</div>
+    <header class="bg-yellow-400 p-4 shadow-lg flex justify-between items-center text-white text-center">
+        <h1 class="kids-font text-2xl">AikoKidzTV Hub</h1>
+        <button onclick="loginUser()" id="loginBtn" class="bg-blue-500 px-4 py-2 rounded-full font-bold shadow-md hover:bg-blue-600">Login / Sign Up</button>
     </header>
 
-    <section class="text-center py-10 px-4 bg-gradient-to-b from-yellow-100 to-blue-50">
+    <section class="text-center py-12 bg-white m-4 rounded-3xl shadow-xl">
         <h2 class="kids-font text-4xl text-orange-500 mb-4">Luna and the Lost Starlight 🌙</h2>
-        <p class="text-gray-700 text-lg mb-6">Aaj hi khareedein aur bacho ko sunayein jaadu bhari kahani!</p>
-        <button id="rzp-button1" class="bg-pink-500 text-white px-8 py-3 rounded-full text-xl kids-font shadow-xl hover:bg-pink-600 transition-all">
+        <p class="mb-8 text-gray-600 text-lg px-4">Bachon ke liye jaadu bhari digital storybook aur cartoons!</p>
+        
+        <button id="rzp-button1" class="bg-pink-500 text-white px-10 py-4 rounded-full text-xl kids-font shadow-lg hover:scale-105 transition-all">
             Abhi Khareedein (₹199) 🚀
         </button>
     </section>
 
-    <main class="max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-purple-200 p-6 rounded-3xl shadow-lg card-bounce cursor-pointer">
-            <div class="text-5xl mb-4">📚</div>
-            <h3 class="kids-font text-2xl text-purple-700">Fun Stories</h3>
-            <p class="text-purple-900 mt-2">Amazing bedtime stories and fairy tales.</p>
-        </div>
-        <div class="bg-green-200 p-6 rounded-3xl shadow-lg card-bounce cursor-pointer">
-            <div class="text-5xl mb-4">🎨</div>
-            <h3 class="kids-font text-2xl text-green-700">Drawing</h3>
-            <p class="text-green-900 mt-2">Learn to draw your favorite animals.</p>
-        </div>
-        <div class="bg-blue-200 p-6 rounded-3xl shadow-lg card-bounce cursor-pointer">
-            <div class="text-5xl mb-4">🔢</div>
-            <h3 class="kids-font text-2xl text-blue-700">ABC & 123</h3>
-            <p class="text-blue-900 mt-2">Counting and alphabets made easy.</p>
-        </div>
-    </main>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-    <footer class="bg-blue-500 text-white text-center p-6 mt-10">
-        <p class="kids-font">© 2026 AikoKidzTV Hub</p>
-        <p class="text-sm mt-2">Making learning fun every day!</p>
-    </footer>
+        // AAPKI FIREBASE CONFIG JO AAPNE COPY KI THI
+        const firebaseConfig = {
+          apiKey: "AIzaSyD4M_1Yu0NQ6WUDZYz-EK9JLMkgFYTAEFw",
+          authDomain: "aikokidztv-70911635-566b7.firebaseapp.com",
+          projectId: "aikokidztv-70911635-566b7",
+          storageBucket: "aikokidztv-70911635-566b7.firebasestorage.app",
+          messagingSenderId: "963381532405",
+          appId: "1:963381532405:web:9f3af5f82d049f508a17bc"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        window.loginUser = () => {
+            signInWithPopup(auth, provider).then((result) => {
+                const user = result.user;
+                document.getElementById('loginBtn').innerText = "Namaste, " + user.displayName.split(' ')[0];
+                if(user.email === "advdeepaknarwal8@gmail.com") {
+                    alert("Swagat hai Supreme Admin! Aapka account access active hai.");
+                }
+            }).catch((err) => {
+                console.error(err);
+                alert("Login Error: " + err.message);
+            });
+        };
+    </script>
 
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
-    var options = {
-        "key": "rzp_live_S6svpzB6CZf6bv", // <-- APNI REAL KEY ID YAHAN DALEIN
-        "amount": "19900", 
-        "name": "AikoKidzTV",
-        "description": "Digital Storybook Access",
-        "handler": function (response){
-            alert("Payment Success! ID: " + response.razorpay_payment_id);
-        },
-        "prefill": { "name": "Deepak Kumar" },
-        "theme": { "color": "#fbbf24" }
-    };
-    var rzp1 = new Razorpay(options);
-    document.getElementById('rzp-button1').onclick = function(e){
-        rzp1.open();
-        e.preventDefault();
-    }
+        document.getElementById('rzp-button1').onclick = function(e){
+            var options = {
+                "key": "rzp_live_S6svpzB6CZf6bv", // <-- YAHAN APNI rzp_live_... WALI KEY DALEIN
+                "amount": "19900",
+                "name": "AikoKidzTV",
+                "description": "Storybook Digital Access",
+                "handler": function (response){ 
+                    alert("Payment Successful! Payment ID: " + response.razorpay_payment_id); 
+                },
+                "prefill": { "name": "Deepak Kumar" },
+                "theme": { "color": "#fbbf24" }
+            };
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
+            e.preventDefault();
+        }
     </script>
 </body>
 </html>
