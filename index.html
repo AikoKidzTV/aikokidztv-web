@@ -18,7 +18,34 @@
         .plan-card { max-width: 320px; margin: 20px auto; border-radius: 30px; border: 4px solid #fbbf24; background: white; padding: 25px; box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
     </style>
 </head>
-<body>
+<body><script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyD4M_1Yu0NQ6WUDZYz-EK9JLMkgFYTAEFw",
+      authDomain: "aikokidztv-70911635-566b7.firebaseapp.com",
+      projectId: "aikokidztv-70911635-566b7",
+      storageBucket: "aikokidztv-70911635-566b7.firebasestorage.app",
+      messagingSenderId: "963381532405",
+      appId: "1:963381532405:web:9f3af5f82d049f508a17bc"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    // Login Function for Firebase
+    window.loginUser = () => {
+        signInWithPopup(auth, provider).then((result) => {
+            alert("Login Successful! Welcome to Firebase Dashboard.");
+            location.reload(); 
+        }).catch((err) => {
+            alert("Login Error: " + err.message);
+        });
+    };
+</script>
+
 
     <div id="test-notice" class="bg-red-600 text-white text-center py-2 kids-font text-sm hidden">
         🚀 Taiyaar Ho Jao! Kal Weekly Test Hai! 💎 Diamond Badge Jeeto!
